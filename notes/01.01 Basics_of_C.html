@@ -1,0 +1,1159 @@
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Basics of C</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(142, 58, 1, 0.141); }
+.select-value-color-orange { background-color: rgba(213, 96, 0, 0.188); }
+.select-value-color-yellow { background-color: rgba(209, 155, 0, 0.238); }
+.select-value-color-green { background-color: rgba(1, 104, 42, 0.145); }
+.select-value-color-blue { background-color: rgba(45, 149, 218, 0.236); }
+.select-value-color-purple { background-color: rgba(104, 1, 184, 0.125); }
+.select-value-color-pink { background-color: rgba(204, 1, 88, 0.137); }
+.select-value-color-red { background-color: rgba(228, 26, 0, 0.148); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+</head><body>
+    
+    <div class="page-body"><h1 class="" id="25c54590-0ccd-805c-9330-d1d027629187">Примеры программирования на C</h1><h2 class="" id="25c54590-0ccd-804c-8af8-fd6f8315ad5f">1. Hello World</h2><pre class="code code-wrap" id="25c54590-0ccd-805e-ac58-c264209d8370"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-80d7-b0ca-e48bb963b099">2. Printf Examples</h2><pre class="code code-wrap" id="25c54590-0ccd-8058-afbf-c8f426b1412b"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    // Базовый printf
+    printf("This is a simple message\n");
+    
+    // Вывод переменных
+    int number = 42;
+    printf("The answer is %d\n", number);
+    
+    // Несколько переменных
+    float pi = 3.14159;
+    printf("Integer: %d, Float: %.2f\n", number, pi);
+    
+    // Параметры форматирования
+    printf("Right-aligned: %10d\n", number);  // Width of 10
+    printf("Left-aligned: %-10d\n", number);  // Выравнивание влево
+    printf("Zero-padded: %05d\n", number);    // Дополнение нулями
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-8063-a474-d2080199401e">3. Variables (Initialization)</h2><pre class="code code-wrap" id="25c54590-0ccd-8021-9646-ff7882baee64"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    // Целые типы
+    int a = 10;
+    short int b = 20;
+    long int c = 1000000L;
+    unsigned int d = 50;
+    
+    // Типы с плавающей точкой
+    float f = 3.14f;
+    double g = 3.14159265359;
+    
+    // Символьный тип
+    char ch = 'A';
+    
+    // Вывод значений
+    printf("Integer a = %d\n", a);
+    printf("Short int b = %d\n", b);
+    printf("Long int c = %ld\n", c);
+    printf("Unsigned int d = %u\n", d);
+    printf("Float f = %f\n", f);
+    printf("Double g = %.10f\n", g);
+    printf("Character ch = %c\n", ch);
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-80c6-a2c3-e7801ac5cd00">4. Assignment (Присваивание)</h2><pre class="code code-wrap" id="25c54590-0ccd-801b-b9f5-f3d9f6f79b75"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    int a;
+    float b;
+    
+    // Простое присваивание
+    a = 10;
+    b = 3.14;
+    
+    printf("a = %d, b = %.2f\n", a, b);
+    
+    // Множественное присваивание
+    int x, y, z;
+    x = y = z = 5;
+    printf("x = %d, y = %d, z = %d\n", x, y, z);
+    
+    // Составное присваивание
+    a += 5;  // Equivalent to a = a + 5
+    b *= 2;  // Equivalent to b = b * 2
+    printf("After compound assignment: a = %d, b = %.2f\n", a, b);
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-8083-8336-d9751cfed00f">5. Arithmetic Operations</h2><pre class="code code-wrap" id="25c54590-0ccd-8058-ac51-de13042ac189"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10, b = 3;
+    float x = 10.0, y = 3.0;
+    
+    // Целочисленная арифметика
+    printf("Integer operations:\n");
+    printf("a + b = %d\n", a + b);  // Сложение
+    printf("a - b = %d\n", a - b);  // Вычитание
+    printf("a * b = %d\n", a * b);  // Умножение
+    printf("a / b = %d\n", a / b);  // Деление (целочисленное)
+    printf("a %% b = %d\n", a % b); // Остаток от деления
+    
+    // Арифметика с плавающей точкой
+    printf("\nFloat operations:\n");
+    printf("x + y = %.2f\n", x + y);
+    printf("x - y = %.2f\n", x - y);
+    printf("x * y = %.2f\n", x * y);
+    printf("x / y = %.2f\n", x / y);  // Деление даёт дробный результат
+    
+    // Инкремент и декремент
+    int c = 5;
+    printf("\nOriginal c = %d\n", c);
+    printf("c++ = %d\n", c++);  // Постинкремент: сначала использовать, потом увеличить
+    printf("Now c = %d\n", c);
+    printf("++c = %d\n", ++c);  // Преинкремент: сначала увеличить, потом использовать
+    printf("Now c = %d\n", c);
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-80a7-8e37-fb6276bef54e">6. Scanf (User Input)</h2><pre class="code code-wrap" id="25c54590-0ccd-80ef-8714-d417574536cf"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    float height;
+    char initial;
+    
+    // Ввод целого числа
+    printf("Enter your age: ");
+    scanf("%d", &amp;age);
+    
+    // Ввод числа с плавающей точкой
+    printf("Enter your height in meters: ");
+    scanf("%f", &amp;height);
+    
+    // Ввод символа
+    printf("Enter your first initial: ");
+    scanf(" %c", &amp;initial);  // Обратите внимание на пробел перед %c, чтобы убрать пробелы
+    
+    // Вывод введённых данных
+    printf("\nYour age is %d years\n", age);
+    printf("Your height is %.2f meters\n", height);
+    printf("Your initial is %c\n", initial);
+    
+    // Ввод нескольких значений
+    int num1, num2;
+    printf("\nEnter two integers separated by space: ");
+    scanf("%d %d", &amp;num1, &amp;num2);
+    printf("You entered: %d and %d\n", num1, num2);
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-8029-bf68-d5ee3d2291d6">7. If Statement</h2><pre class="code code-wrap" id="25c54590-0ccd-8018-b9d1-c9f6cc815b26"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    
+    printf("Enter a number: ");
+    scanf("%d", &amp;number);
+    
+    // Простой оператор if
+    if (number &gt; 0) {
+        printf("The number is positive.\n");
+    }
+    
+    // Другой пример
+    if (number % 2 == 0) {
+        printf("The number is even.\n");
+    }
+    
+    // Логические операторы в условиях
+    if (number &gt; 0 &amp;&amp; number &lt; 10) {
+        printf("The number is between 0 and 10.\n");
+    }
+    
+    if (number &lt; 0 || number &gt; 100) {
+        printf("The number is either negative or greater than 100.\n");
+    }
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-8056-939c-ef92d45683c0">8. If...Else Statement</h2><pre class="code code-wrap" id="25c54590-0ccd-807d-acff-d5b94bc8c4bb"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    
+    printf("Enter a number: ");
+    scanf("%d", &amp;number);
+    
+    // Оператор if-else
+    if (number &gt; 0) {
+        printf("The number is positive.\n");
+    } else {
+        printf("The number is zero or negative.\n");
+    }
+    
+    // Оператор if-else if-else
+    if (number &gt; 0) {
+        printf("The number is positive.\n");
+    } else if (number &lt; 0) {
+        printf("The number is negative.\n");
+    } else {
+        printf("The number is zero.\n");
+    }
+    
+    // Вложенный if-else
+    if (number != 0) {
+        if (number % 2 == 0) {
+            printf("The number is even and not zero.\n");
+        } else {
+            printf("The number is odd.\n");
+        }
+    } else {
+        printf("The number is zero.\n");
+    }
+    
+    // Тернарный оператор (условное выражение)
+    printf("The number is %s.\n", (number % 2 == 0) ? "even" : "odd");
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-8077-bef3-c4835746dc14">9. Arrays</h2><pre class="code code-wrap" id="25c54590-0ccd-8016-9f5f-f15e72d3233e"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    // Объявление и инициализация
+    int numbers[5] = {10, 20, 30, 40, 50};
+    
+    // Доступ к элементам массива
+    printf("First element: %d\n", numbers[0]);
+    printf("Third element: %d\n", numbers[2]);
+    
+    // Изменение элементов массива
+    numbers[1] = 25;
+    printf("Modified second element: %d\n", numbers[1]);
+    
+    // Цикл по массиву
+    printf("\nAll array elements:\n");
+    for (int i = 0; i &lt; 5; i++) {
+        printf("numbers[%d] = %d\n", i, numbers[i]);
+    }
+    
+    // Сумма элементов массива
+    int sum = 0;
+    for (int i = 0; i &lt; 5; i++) {
+        sum += numbers[i];
+    }
+    printf("\nSum of all elements: %d\n", sum);
+    
+    // Двумерный массив (матрица)
+    int matrix[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+    
+    printf("\n2D array (matrix):\n");
+    for (int i = 0; i &lt; 3; i++) {
+        for (int j = 0; j &lt; 3; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-80d1-9917-c6e9b64e1980">10. While Loop</h2><pre class="code code-wrap" id="25c54590-0ccd-804d-8933-cb1d75567e8a"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    // Простой цикл while
+    int count = 1;
+    printf("Counting with while loop:\n");
+    while (count &lt;= 5) {
+        printf("%d ", count);
+        count++;
+    }
+    printf("\n");
+    
+    // Сумма чисел
+    int sum = 0;
+    int i = 1;
+    while (i &lt;= 10) {
+        sum += i;
+        i++;
+    }
+    printf("Sum of numbers 1 to 10: %d\n", sum);
+    
+    // Ввод до выполнения условия
+    int number;
+    printf("\nEnter numbers (enter 0 to stop):\n");
+    scanf("%d", &amp;number);
+    while (number != 0) {
+        printf("You entered: %d\n", number);
+        printf("Enter another number (0 to stop): ");
+        scanf("%d", &amp;number);
+    }
+    
+    // Цикл do-while (выполняется хотя бы один раз)
+    int j = 1;
+    printf("\nCounting with do-while loop:\n");
+    do {
+        printf("%d ", j);
+        j++;
+    } while (j &lt;= 5);
+    printf("\n");
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-8006-b5b8-f4a4d869cfb5">11. For Loop</h2><pre class="code code-wrap" id="25c54590-0ccd-803e-ab34-fb54ef09cf65"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+int main() {
+    // Простой цикл for
+    printf("Counting with for loop:\n");
+    for (int i = 1; i &lt;= 5; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+    
+    // Цикл с другим шагом
+    printf("\nCounting by twos:\n");
+    for (int i = 0; i &lt;= 10; i += 2) {
+        printf("%d ", i);
+    }
+    printf("\n");
+    
+    // Вложенные циклы for (таблица умножения)
+    printf("\nMultiplication table (5x5):\n");
+    for (int i = 1; i &lt;= 5; i++) {
+        for (int j = 1; j &lt;= 5; j++) {
+            printf("%3d ", i * j);  // %3d обеспечивает выравнивание
+        }
+        printf("\n");
+    }
+    
+    // Обратный счёт
+    printf("\nCounting backward:\n");
+    for (int i = 10; i &gt; 0; i--) {
+        printf("%d ", i);
+    }
+    printf("\n");
+    
+    // Цикл for с несколькими переменными
+    printf("\nMultiple counter variables:\n");
+    for (int i = 0, j = 10; i &lt;= 10 &amp;&amp; j &gt;= 0; i++, j--) {
+        printf("i=%d, j=%d\n", i, j);
+    }
+    
+    return 0;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-802f-934c-ea4c65214c3f">12. Functions</h2><pre class="code code-wrap" id="25c54590-0ccd-80d2-97b9-fc5dcfe7fb23"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+
+// Function declaration
+void greet();
+int add(int a, int b);
+int sumEvenNumbers(int limit);
+
+int main() {
+    // Простой вызов функции
+    greet();
+    
+    // Функция с возвращаемым значением
+    int sum = add(5, 3);
+    printf("Sum: %d\n", sum);
+    
+    // Функция с if и циклом while
+    int evenSum = sumEvenNumbers(10);
+    printf("Sum of even numbers up to 10: %d\n", evenSum);
+    
+    return 0;
+}
+
+// Функция без параметров и возвращаемого значения
+void greet() {
+    printf("Hello, welcome to C functions!\n");
+}
+
+// Функция с параметрами и возвращаемым значением
+int add(int a, int b) {
+    return a + b;
+}
+
+// Функция с использованием if и while
+int sumEvenNumbers(int limit) {
+    int sum = 0;
+    int i = 1;
+    
+    while (i &lt;= limit) {
+        if (i % 2 == 0) {
+            sum += i;
+        }
+        i++;
+    }
+    
+    return sum;
+}
+</code></pre><h2 class="" id="25c54590-0ccd-807b-a5b9-f287c86223d6">13. Structures</h2><pre class="code code-wrap" id="25c54590-0ccd-8032-a2c7-e5bbc6dcfcc8"><code class="language-c" style="white-space:pre-wrap;word-break:break-all">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+// Простое определение структуры
+struct Student {
+    int id;
+    char name[50];
+    float gpa;
+};
+
+// Функция, которая создаёт и возвращает структуру Student
+struct Student createStudent(int id, const char *name, float gpa) {
+    struct Student newStudent;
+    newStudent.id = id;
+    strcpy(newStudent.name, name);
+    newStudent.gpa = gpa;
+    return newStudent;
+}
+
+int main() {
+    // Создание структуры с помощью функции
+    struct Student student1 = createStudent(101, "John Doe", 3.75);
+    
+    // Создание другой структуры напрямую
+    struct Student student2;
+    student2.id = 102;
+    strcpy(student2.name, "Jane Smith");
+    student2.gpa = 3.90;
+    
+    // Доступ к элементам структуры
+    printf("Student 1 ID: %d\n", student1.id);
+    printf("Student 1 Name: %s\n", student1.name);
+    printf("Student 1 GPA: %.2f\n\n", student1.gpa);
+    
+    printf("Student 2 ID: %d\n", student2.id);
+    printf("Student 2 Name: %s\n", student2.name);
+    printf("Student 2 GPA: %.2f\n", student2.gpa);
+    
+    return 0;
+}
+</code></pre><p class="" id="25c54590-0ccd-8093-9e57-f350d77bdd96">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span>
+<style>
+.code-block {
+  position: relative;
+}
+.copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.copy-button:hover {
+  background: #ddd;
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll("pre.code").forEach((block) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "code-block";
+    block.parentNode.insertBefore(wrapper, block);
+    wrapper.appendChild(block);
+
+    const button = document.createElement("button");
+    button.className = "copy-button";
+    button.innerText = "Копировать";
+
+    button.addEventListener("click", () => {
+      const code = block.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "Скопировано!";
+        setTimeout(() => (button.innerText = "Копировать"), 2000);
+      });
+    });
+
+    wrapper.appendChild(button);
+  });
+});
+</script>
+</body></html>
