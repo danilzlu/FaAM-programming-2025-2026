@@ -11,7 +11,8 @@ The repository contains presentations, code examples and notes for course "Progr
 ## Содержание
 - `presentations/` — презентации в формате PDF или PPTX  
 - `code/` — примеры кода на разных языках программирования  
-- `notes/` — конспекты и дополнительные материалы  
+- `notes/` — конспекты и дополнительные материалы
+- `books/` - книги
 
 ---
 
